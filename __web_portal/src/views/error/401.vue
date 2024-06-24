@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div class="errPage-container">
     <el-button icon="arrow-left" class="pan-back-btn" @click="back">

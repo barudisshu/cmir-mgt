@@ -1,7 +1,11 @@
 /*
- * Copyright (c) 2024. Galudisu@gmail.com
+ * COPYRIGHT Cmir 2024
  *
- * All rights reserved.
+ * The copyright to the computer program(s) herein is the property of
+ * Cmir Inc. The programs may be used and/or copied only with written
+ * permission from Cmir Inc. or in accordance with the terms and
+ * conditions stipulated in the agreement/contract under which the
+ * program(s) have been supplied.
  */
 
 package com.cmir.framework.config;
@@ -14,14 +18,14 @@ import com.cmir.common.enums.DataSourceType;
 import com.cmir.common.utils.spring.SpringUtils;
 import com.cmir.framework.config.properties.DruidProperties;
 import com.cmir.framework.datasource.DynamicDataSource;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -77,6 +81,7 @@ public class DruidConfig {
       DataSource dataSource = SpringUtils.getBean(beanName);
       targetDataSources.put(sourceName, dataSource);
     } catch (Exception e) {
+      // NOSONAR
     }
   }
 
@@ -91,7 +96,7 @@ public class DruidConfig {
     DruidStatProperties.StatViewServlet config = properties.getStatViewServlet();
     // 提取common.js的配置路径
     String pattern = config.getUrlPattern() != null ? config.getUrlPattern() : "/druid/*";
-    String commonJsPattern = pattern.replace("\\*", "js/common.js");
+    String commonJsPattern = pattern.replaceAll("\\w*", "js/common.js");
     final String filePath = "support/http/resources/js/common.js";
     // 创建filter进行过滤
     Filter filter =

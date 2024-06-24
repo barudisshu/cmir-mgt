@@ -1,10 +1,4 @@
 
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 const req = require.context('../../assets/icons/svg', false, /\.svg$/)
 const requireAll = requireContext => requireContext.keys()
 

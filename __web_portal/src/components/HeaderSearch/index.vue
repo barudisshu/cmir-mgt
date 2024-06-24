@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div :class="{'show':show}" class="header-search">
     <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />

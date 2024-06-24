@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <script>
 export default {
   name: 'MenuItem',

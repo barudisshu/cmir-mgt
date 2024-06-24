@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <el-drawer size="280px" :visible="visible" :with-header="false" :append-to-body="true" :show-close="false">
     <div class="drawer-container">

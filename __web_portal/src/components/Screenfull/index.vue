@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div>
     <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="click" />

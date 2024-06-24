@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2024. Galudisu@gmail.com
+  ~ COPYRIGHT Cmir 2024
   ~
-  ~ All rights reserved.
+  ~ The copyright to the computer program(s) herein is the property of
+  ~ Cmir Inc. The programs may be used and/or copied only with written
+  ~ permission from Cmir Inc. or in accordance with the terms and
+  ~ conditions stipulated in the agreement/contract under which the
+  ~ program(s) have been supplied.
   -->
 
 <!DOCTYPE mapper
@@ -24,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertLogininfor" parameterType="SysLogininfor">
 		insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time)
-		values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
+		values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, current_timestamp)
 	</insert>
 
 	<select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
@@ -40,17 +44,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND user_name like concat('%', #{userName}, '%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				AND login_time &gt;= #{params.beginTime}
+				and login_time::date &gt;= to_date(#{params.beginTime},'yyyy-MM-dd')
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				AND login_time &lt;= #{params.endTime}
+				and login_time::date &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
 			</if>
 		</where>
 		order by info_id desc
 	</select>
 
 	<delete id="deleteLogininforByIds" parameterType="Long">
- 		delete from sys_logininfor where info_id in
+ 		delete from sys_logininfor where info_id::bigint in
  		<foreach collection="array" item="infoId" open="(" separator="," close=")">
  			#{infoId}
         </foreach>

@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import tab from './tab'
 import auth from './auth'
 import cache from './cache'

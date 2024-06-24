@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import hasRole from './permission/hasRole'
 import hasPermi from './permission/hasPermi'
 import dialogDrag from './dialog/drag'

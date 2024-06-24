@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 /* eslint-disable max-len */
 import { trigger } from './config'
 

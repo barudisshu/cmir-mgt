@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 const sessionCache = {
   set (key, value) {
     if (!sessionStorage) {

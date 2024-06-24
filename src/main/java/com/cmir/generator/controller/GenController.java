@@ -1,7 +1,11 @@
 /*
- * Copyright (c) 2024. Galudisu@gmail.com
+ * COPYRIGHT Cmir 2024
  *
- * All rights reserved.
+ * The copyright to the computer program(s) herein is the property of
+ * Cmir Inc. The programs may be used and/or copied only with written
+ * permission from Cmir Inc. or in accordance with the terms and
+ * conditions stipulated in the agreement/contract under which the
+ * program(s) have been supplied.
  */
 
 package com.cmir.generator.controller;
@@ -9,7 +13,7 @@ package com.cmir.generator.controller;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
-import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlCreateTableStatement;
+import com.alibaba.druid.sql.dialect.postgresql.ast.stmt.PGCreateSchemaStatement;
 import com.cmir.common.annotation.Log;
 import com.cmir.common.core.controller.BaseController;
 import com.cmir.common.core.domain.AjaxResult;
@@ -22,12 +26,12 @@ import com.cmir.generator.domain.GenTable;
 import com.cmir.generator.domain.GenTableColumn;
 import com.cmir.generator.service.IGenTableColumnService;
 import com.cmir.generator.service.IGenTableService;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -118,10 +122,10 @@ public class GenController extends BaseController {
       List<SQLStatement> sqlStatements = SQLUtils.parseStatements(sql, DbType.mysql);
       List<String> tableNames = new ArrayList<>();
       for (SQLStatement sqlStatement : sqlStatements) {
-        if (sqlStatement instanceof MySqlCreateTableStatement) {
-          MySqlCreateTableStatement createTableStatement = (MySqlCreateTableStatement) sqlStatement;
+        if (sqlStatement instanceof PGCreateSchemaStatement) {
+          PGCreateSchemaStatement createTableStatement = (PGCreateSchemaStatement) sqlStatement;
           if (genTableService.createTable(createTableStatement.toString())) {
-            String tableName = createTableStatement.getTableName().replaceAll("`", "");
+            String tableName = createTableStatement.getSchemaName().getName().replaceAll("`", "");
             tableNames.add(tableName);
           }
         }

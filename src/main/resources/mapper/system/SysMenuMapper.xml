@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2024. Galudisu@gmail.com
+  ~ COPYRIGHT Cmir 2024
   ~
-  ~ All rights reserved.
+  ~ The copyright to the computer program(s) herein is the property of
+  ~ Cmir Inc. The programs may be used and/or copied only with written
+  ~ permission from Cmir Inc. or in accordance with the terms and
+  ~ conditions stipulated in the agreement/contract under which the
+  ~ program(s) have been supplied.
   -->
 
 <!DOCTYPE mapper
@@ -34,7 +38,7 @@
 	</resultMap>
 
 	<sql id="selectMenuVo">
-        select menu_id, menu_name, parent_id, order_num, path, component, `query`, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time
+        select menu_id, menu_name, parent_id, order_num, path, component, query, is_frame, is_cache, menu_type, visible, status, nullif(perms,'') as perms, icon, create_time
 		from sys_menu
     </sql>
 
@@ -48,20 +52,20 @@
 				AND visible = #{visible}
 			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND status = #{status}::integer
 			</if>
 		</where>
 		order by parent_id, order_num
 	</select>
 
 	<select id="selectMenuTreeAll" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.query, m.visible, m.status, nullif(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
 		order by m.parent_id, m.order_num
 	</select>
 
 	<select id="selectMenuListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.query, m.visible, m.status, nullif(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
 		left join sys_role_menu rm on m.menu_id = rm.menu_id
 		left join sys_user_role ur on rm.role_id = ur.role_id
@@ -74,19 +78,19 @@
             AND m.visible = #{visible}
 		</if>
 		<if test="status != null and status != ''">
-            AND m.status = #{status}
+            AND m.status = #{status}::integer
 		</if>
 		order by m.parent_id, m.order_num
 	</select>
 
     <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.query, m.visible, m.status, nullif(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 			 left join sys_role ro on ur.role_id = ro.role_id
 			 left join sys_user u on ur.user_id = u.user_id
-		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
+		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = '0'  AND ro.status = '0'
 		order by m.parent_id, m.order_num
 	</select>
 
@@ -146,17 +150,17 @@
 			<if test="orderNum != null">order_num = #{orderNum},</if>
 			<if test="path != null and path != ''">path = #{path},</if>
 			<if test="component != null">component = #{component},</if>
-			<if test="query != null">`query` = #{query},</if>
-			<if test="isFrame != null and isFrame != ''">is_frame = #{isFrame},</if>
-			<if test="isCache != null and isCache != ''">is_cache = #{isCache},</if>
+			<if test="query != null">query = #{query},</if>
+			<if test="isFrame != null and isFrame != ''">is_frame = #{isFrame}::integer,</if>
+			<if test="isCache != null and isCache != ''">is_cache = #{isCache}::integer,</if>
 			<if test="menuType != null and menuType != ''">menu_type = #{menuType},</if>
 			<if test="visible != null">visible = #{visible},</if>
-			<if test="status != null">status = #{status},</if>
+			<if test="status != null">status = #{status}::integer,</if>
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
 			<if test="remark != null and remark != ''">remark = #{remark},</if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-			update_time = sysdate()
+			update_time = current_timestamp
 		</set>
 		where menu_id = #{menuId}
 	</update>
@@ -169,7 +173,7 @@
 		<if test="orderNum != null">order_num,</if>
 		<if test="path != null and path != ''">path,</if>
 		<if test="component != null and component != ''">component,</if>
-		<if test="query != null and query != ''">`query`,</if>
+		<if test="query != null and query != ''">query,</if>
 		<if test="isFrame != null and isFrame != ''">is_frame,</if>
 		<if test="isCache != null and isCache != ''">is_cache,</if>
 		<if test="menuType != null and menuType != ''">menu_type,</if>
@@ -188,16 +192,16 @@
 		<if test="path != null and path != ''">#{path},</if>
 		<if test="component != null and component != ''">#{component},</if>
 		<if test="query != null and query != ''">#{query},</if>
-		<if test="isFrame != null and isFrame != ''">#{isFrame},</if>
-		<if test="isCache != null and isCache != ''">#{isCache},</if>
+		<if test="isFrame != null and isFrame != ''">#{isFrame}::integer,</if>
+		<if test="isCache != null and isCache != ''">#{isCache}::integer,</if>
 		<if test="menuType != null and menuType != ''">#{menuType},</if>
 		<if test="visible != null">#{visible},</if>
-		<if test="status != null">#{status},</if>
+		<if test="status != null">#{status}::integer,</if>
 		<if test="perms !=null and perms != ''">#{perms},</if>
 		<if test="icon != null and icon != ''">#{icon},</if>
 		<if test="remark != null and remark != ''">#{remark},</if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
-		sysdate()
+		current_timestamp
 		)
 	</insert>
 

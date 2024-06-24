@@ -1,7 +1,11 @@
 /*
- * Copyright (c) 2024. Galudisu@gmail.com
+ * COPYRIGHT Cmir 2024
  *
- * All rights reserved.
+ * The copyright to the computer program(s) herein is the property of
+ * Cmir Inc. The programs may be used and/or copied only with written
+ * permission from Cmir Inc. or in accordance with the terms and
+ * conditions stipulated in the agreement/contract under which the
+ * program(s) have been supplied.
  */
 
 package com.cmir.framework.config;
@@ -87,46 +91,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
 
     httpSecurity
-        // CSRF禁用，因为不使用session
-        .csrf()
-        .disable()
-        // 禁用HTTP响应标头
-        .headers()
-        .cacheControl()
-        .disable()
-        .and()
-        // 认证失败处理类
-        .exceptionHandling()
-        .authenticationEntryPoint(unauthorizedHandler)
-        .and()
-        // 基于token，所以不需要session
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        // 过滤请求
-        .authorizeRequests()
-        // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-        .antMatchers("/login", "/register", "/captchaImage")
-        .permitAll()
-        // 静态资源，可匿名访问
-        .antMatchers(
-            HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**")
-        .permitAll()
-        .antMatchers(
-            "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**")
-        .permitAll()
-        // 除上面外的所有请求全部需要鉴权认证
-        .anyRequest()
-        .authenticated()
-        .and()
-        .headers()
-        .frameOptions()
-        .disable();
-    httpSecurity.logout(
-        (logout) -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler));
+      // CSRF禁用，因为不使用session
+      .csrf().disable()
+      // 禁用HTTP响应标头
+      .headers().cacheControl().disable().and()
+      // 认证失败处理类
+      .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+      // 基于token，所以不需要session
+      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+      // 过滤请求
+      .authorizeRequests()
+      // 对于登录login 注册register 验证码captchaImage 允许匿名访问
+      .antMatchers("/login", "/register", "/captchaImage").permitAll()
+      // 静态资源，可匿名访问
+      .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
+      .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
+      // 除上面外的所有请求全部需要鉴权认证
+      .anyRequest().authenticated()
+      .and()
+      .headers().frameOptions().disable();
+    // 添加Logout filter
+    httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
     // 添加JWT filter
-    httpSecurity.addFilterBefore(
-        authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     // 添加CORS filter
     httpSecurity.addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
     httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);

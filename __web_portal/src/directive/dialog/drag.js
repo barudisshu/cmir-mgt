@@ -1,8 +1,7 @@
-/*
- * Copyright (c) 2019-2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
+/**
+* v-dialogDrag 弹窗拖拽
+* Copyright (c) 2019 ruoyi
+*/
 
 export default {
   bind(el, binding, vnode, oldVnode) {

@@ -68,13 +68,13 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 172.18.12.172
+    host: localhost
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
     # 密码
-    password: P@ssw0rd
+    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -111,7 +111,8 @@ mybatis:
 
 # PageHelper分页插件
 pagehelper:
-  helperDialect: mysql
+  helperDialect: postgresql
+  reasonable: true
   supportMethodsArguments: true
   params: count=countSql
 

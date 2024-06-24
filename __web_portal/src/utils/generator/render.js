@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import { makeMap } from '@/utils/index'
 
 // 参考https://github.com/vuejs/vue/blob/v2.6.10/src/platforms/web/server/util.js

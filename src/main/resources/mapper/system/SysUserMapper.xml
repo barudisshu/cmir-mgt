@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2024. Galudisu@gmail.com
+  ~ COPYRIGHT Cmir 2024
   ~
-  ~ All rights reserved.
+  ~ The copyright to the computer program(s) herein is the property of
+  ~ Cmir Inc. The programs may be used and/or copied only with written
+  ~ permission from Cmir Inc. or in accordance with the terms and
+  ~ conditions stipulated in the agreement/contract under which the
+  ~ program(s) have been supplied.
   -->
 
 <!DOCTYPE mapper
@@ -79,10 +83,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND u.phonenumber like concat('%', #{phonenumber}, '%')
 		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			AND to_char(u.create_time,'yyyy-MM-dd')::date &gt;= to_date(#{params.beginTime},'yyyy-MM-dd')
 		</if>
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			AND to_char(u.create_time,'yyyy-MM-dd')::date &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
 		</if>
 		<if test="deptId != null and deptId != 0">
 			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
@@ -176,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
- 			sysdate()
+ 			current_timestamp
  		)
 	</insert>
 
@@ -196,7 +200,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="loginDate != null">login_date = #{loginDate},</if>
  			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
  			<if test="remark != null">remark = #{remark},</if>
- 			update_time = sysdate()
+ 			update_time = current_timestamp
  		</set>
  		where user_id = #{userId}
 	</update>

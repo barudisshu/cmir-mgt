@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div class="dashboard-editor-container">
 
@@ -31,7 +25,7 @@
       </el-col>
     </el-row>
 
-
+    
   </div>
 </template>
 

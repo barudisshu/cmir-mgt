@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div ref="rightPanel" class="rightPanel-container">
     <div class="rightPanel-background" />

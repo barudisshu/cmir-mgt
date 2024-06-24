@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <!-- 创建表 -->
   <el-dialog title="创建表" :visible.sync="visible" width="800px" top="5vh" append-to-body>

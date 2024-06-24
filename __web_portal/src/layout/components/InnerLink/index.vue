@@ -1,9 +1,3 @@
-<!--
-  - Copyright (c) 2024. Galudisu@gmail.com
-  -
-  - All rights reserved.
-  -->
-
 <template>
   <div :style="'height:' + height" v-loading="loading" element-loading-text="正在加载页面，请稍候！">
     <iframe

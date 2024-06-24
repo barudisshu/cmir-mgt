@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 /**
  * @classdesc 字典数据
  * @property {String} label 标签

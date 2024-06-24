@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 export default {
   '401': '认证失败，无法访问系统资源',
   '403': '当前操作没有权限',

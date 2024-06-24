@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import { mergeRecursive } from "@/utils/ruoyi";
 import DictOptions from './DictOptions'
 

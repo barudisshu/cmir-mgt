@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import { Message, MessageBox, Notification, Loading } from 'element-ui'
 
 let loadingInstance;

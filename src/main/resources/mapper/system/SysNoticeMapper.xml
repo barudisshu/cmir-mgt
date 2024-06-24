@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2024. Galudisu@gmail.com
+  ~ COPYRIGHT Cmir 2024
   ~
-  ~ All rights reserved.
+  ~ The copyright to the computer program(s) herein is the property of
+  ~ Cmir Inc. The programs may be used and/or copied only with written
+  ~ permission from Cmir Inc. or in accordance with the terms and
+  ~ conditions stipulated in the agreement/contract under which the
+  ~ program(s) have been supplied.
   -->
 
 <!DOCTYPE mapper
@@ -24,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id, notice_title, notice_type, cast(notice_content as char) as notice_content, status, create_by, create_time, update_by, update_time, remark
+        select notice_id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark
 		from sys_notice
     </sql>
 
@@ -64,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="status != null and status != ''">#{status}, </if>
 			<if test="remark != null and remark != ''">#{remark},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			sysdate()
+ 			current_timestamp
 		)
     </insert>
 
@@ -76,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="noticeContent != null">notice_content = #{noticeContent}, </if>
             <if test="status != null and status != ''">status = #{status}, </if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
- 			update_time = sysdate()
+ 			update_time = current_timestamp
         </set>
         where notice_id = #{noticeId}
     </update>
@@ -86,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteNoticeByIds" parameterType="Long">
-        delete from sys_notice where notice_id in
+        delete from sys_notice where notice_id::bigint in
         <foreach item="noticeId" collection="array" open="(" separator="," close=")">
             #{noticeId}
         </foreach>

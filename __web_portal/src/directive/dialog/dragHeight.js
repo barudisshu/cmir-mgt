@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2019-2024. Galudisu@gmail.com
- *
- * All rights reserved.
+/**
+ * v-dialogDragWidth 可拖动弹窗高度（右下角）
+ * Copyright (c) 2019 ruoyi
  */
 
 export default {

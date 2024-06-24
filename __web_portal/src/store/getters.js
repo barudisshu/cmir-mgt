@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 const getters = {
   sidebar: state => state.app.sidebar,
   size: state => state.app.size,

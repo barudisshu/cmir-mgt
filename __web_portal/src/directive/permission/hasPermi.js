@@ -1,7 +1,6 @@
- /*
- * Copyright (c) 2019-2024. Galudisu@gmail.com
- *
- * All rights reserved.
+ /**
+ * v-hasPermi 操作权限处理
+ * Copyright (c) 2019 ruoyi
  */
 
 import store from '@/store'

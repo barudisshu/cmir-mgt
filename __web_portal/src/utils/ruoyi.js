@@ -1,11 +1,5 @@
 
 
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 /**
  * 通用js方法封装处理
  * Copyright (c) 2019 ruoyi

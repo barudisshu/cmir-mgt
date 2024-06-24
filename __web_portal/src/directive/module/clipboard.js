@@ -1,8 +1,7 @@
-/*
- * Copyright (c) 2021-2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
+/**
+* v-clipboard 文字复制剪贴
+* Copyright (c) 2021 ruoyi
+*/
 
 import Clipboard from 'clipboard'
 export default {

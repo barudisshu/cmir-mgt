@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import Dict from './Dict'
 import { mergeOptions } from './DictOptions'
 

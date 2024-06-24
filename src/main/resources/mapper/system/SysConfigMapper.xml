@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2024. Galudisu@gmail.com
+  ~ COPYRIGHT Cmir 2024
   ~
-  ~ All rights reserved.
+  ~ The copyright to the computer program(s) herein is the property of
+  ~ Cmir Inc. The programs may be used and/or copied only with written
+  ~ permission from Cmir Inc. or in accordance with the terms and
+  ~ conditions stipulated in the agreement/contract under which the
+  ~ program(s) have been supplied.
   -->
 
 <!DOCTYPE mapper
@@ -66,10 +70,10 @@
         AND config_key like concat('%', #{configKey}, '%')
       </if>
       <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-        and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        and to_char(create_time,'yyyy-MM-dd') &gt;= to_char(#{params.beginTime},'yyyy-MM-dd')
       </if>
       <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-        and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        and to_char(create_time,'yyyy-MM-dd') &lt;= to_char(#{params.endTime},'yyyy-MM-dd')
       </if>
     </where>
   </select>
@@ -100,7 +104,7 @@
     <if test="configType != null and configType != ''">#{configType},</if>
     <if test="createBy != null and createBy != ''">#{createBy},</if>
     <if test="remark != null and remark != ''">#{remark},</if>
-    sysdate()
+    current_timestamp
     )
   </insert>
 
@@ -113,7 +117,7 @@
       <if test="configType != null and configType != ''">config_type = #{configType},</if>
       <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
       <if test="remark != null">remark = #{remark},</if>
-      update_time = sysdate()
+      update_time = current_timestamp
     </set>
     where config_id = #{configId}
   </update>
@@ -125,7 +129,7 @@
   </delete>
 
   <delete id="deleteConfigByIds" parameterType="Long">
-    delete from sys_config where config_id in
+    delete from sys_config where config_id::bigint in
     <foreach item="configId" collection="array" open="(" separator="," close=")">
       #{configId}
     </foreach>

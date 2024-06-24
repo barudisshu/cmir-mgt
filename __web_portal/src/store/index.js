@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2024. Galudisu@gmail.com
- *
- * All rights reserved.
- */
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
