@@ -2,7 +2,7 @@ package cc.cmir.quartz.domain;
 
 import cc.cmir.common.annotation.Excel;
 import cc.cmir.common.core.domain.BaseEntity;
-import java.util.Date;
+import java.time.Instant;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -42,10 +42,10 @@ public class SysJobLog extends BaseEntity {
   private String exceptionInfo;
 
   /** 开始时间 */
-  private Date startTime;
+  private Instant startTime;
 
   /** 停止时间 */
-  private Date stopTime;
+  private Instant stopTime;
 
   public Long getJobLogId() {
     return jobLogId;
@@ -103,19 +103,19 @@ public class SysJobLog extends BaseEntity {
     this.exceptionInfo = exceptionInfo;
   }
 
-  public Date getStartTime() {
+  public Instant getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(Date startTime) {
+  public void setStartTime(Instant startTime) {
     this.startTime = startTime;
   }
 
-  public Date getStopTime() {
+  public Instant getStopTime() {
     return stopTime;
   }
 
-  public void setStopTime(Date stopTime) {
+  public void setStopTime(Instant stopTime) {
     this.stopTime = stopTime;
   }
 

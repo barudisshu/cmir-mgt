@@ -9,7 +9,6 @@ import cc.cmir.common.core.text.Convert;
 import cc.cmir.common.exception.ServiceException;
 import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.common.utils.StringUtils;
-import cc.cmir.common.utils.spring.SpringUtils;
 import cc.cmir.system.mapper.SysDeptMapper;
 import cc.cmir.system.mapper.SysRoleMapper;
 import cc.cmir.system.service.ISysDeptService;
@@ -55,7 +54,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
    */
   @Override
   public List<TreeSelect> selectDeptTreeList(SysDept dept) {
-    List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
+    List<SysDept> depts = selectDeptList(dept);
     return buildDeptTreeSelect(depts);
   }
 
@@ -178,7 +177,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     if (!SecurityUtils.isAdmin() && StringUtils.isNotNull(deptId)) {
       SysDept dept = new SysDept();
       dept.setDeptId(deptId);
-      List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
+      List<SysDept> depts = selectDeptList(dept);
       if (StringUtils.isEmpty(depts)) {
         throw new ServiceException("没有权限访问部门数据！");
       }

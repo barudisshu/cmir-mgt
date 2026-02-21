@@ -8,7 +8,6 @@ import cc.cmir.common.exception.ServiceException;
 import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.common.utils.StringUtils;
 import cc.cmir.common.utils.bean.BeanValidators;
-import cc.cmir.common.utils.spring.SpringUtils;
 import cc.cmir.system.domain.SysPost;
 import cc.cmir.system.domain.SysUserPost;
 import cc.cmir.system.domain.SysUserRole;
@@ -233,7 +232,7 @@ public class SysUserServiceImpl implements ISysUserService {
     if (!SecurityUtils.isAdmin()) {
       SysUser user = new SysUser();
       user.setUserId(userId);
-      List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
+      List<SysUser> users = selectUserList(user);
       if (StringUtils.isEmpty(users)) {
         throw new ServiceException("没有权限访问用户数据！");
       }

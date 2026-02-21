@@ -9,7 +9,7 @@ import cc.cmir.common.utils.spring.SpringUtils;
 import cc.cmir.quartz.domain.SysJob;
 import cc.cmir.quartz.domain.SysJobLog;
 import cc.cmir.quartz.service.ISysJobLogService;
-import java.util.Date;
+import java.time.Instant;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public abstract class AbstractQuartzJob implements Job {
   private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
   /** 线程本地变量 */
-  private static ThreadLocal<Date> threadLocal = new ThreadLocal<>();
+  private static ThreadLocal<Instant> threadLocal = new ThreadLocal<>();
 
   @Override
   public void execute(JobExecutionContext context) {
@@ -50,7 +50,7 @@ public abstract class AbstractQuartzJob implements Job {
    * @param sysJob 系统计划任务
    */
   protected void before(JobExecutionContext context, SysJob sysJob) {
-    threadLocal.set(new Date());
+    threadLocal.set(Instant.now());
   }
 
   /**
@@ -60,7 +60,7 @@ public abstract class AbstractQuartzJob implements Job {
    * @param sysJob 系统计划任务
    */
   protected void after(JobExecutionContext context, SysJob sysJob, Exception e) {
-    Date startTime = threadLocal.get();
+    Instant startTime = threadLocal.get();
     threadLocal.remove();
 
     final SysJobLog sysJobLog = new SysJobLog();
@@ -68,8 +68,8 @@ public abstract class AbstractQuartzJob implements Job {
     sysJobLog.setJobGroup(sysJob.getJobGroup());
     sysJobLog.setInvokeTarget(sysJob.getInvokeTarget());
     sysJobLog.setStartTime(startTime);
-    sysJobLog.setStopTime(new Date());
-    long runMs = sysJobLog.getStopTime().getTime() - sysJobLog.getStartTime().getTime();
+    sysJobLog.setStopTime(Instant.now());
+    long runMs = sysJobLog.getStopTime().toEpochMilli() - sysJobLog.getStartTime().toEpochMilli();
     sysJobLog.setJobMessage(sysJobLog.getJobName() + " 总共耗时：" + runMs + "毫秒");
     if (e != null) {
       sysJobLog.setStatus(Constants.FAIL);

@@ -6,7 +6,6 @@ import cc.cmir.common.core.domain.entity.SysRole;
 import cc.cmir.common.exception.ServiceException;
 import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.common.utils.StringUtils;
-import cc.cmir.common.utils.spring.SpringUtils;
 import cc.cmir.system.domain.SysRoleDept;
 import cc.cmir.system.domain.SysRoleMenu;
 import cc.cmir.system.domain.SysUserRole;
@@ -107,7 +106,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
    */
   @Override
   public List<SysRole> selectRoleAll() {
-    return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
+    return selectRoleList(new SysRole());
   }
 
   /**
@@ -187,7 +186,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
       for (Long roleId : roleIds) {
         SysRole role = new SysRole();
         role.setRoleId(roleId);
-        List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
+        List<SysRole> roles = selectRoleList(role);
         if (StringUtils.isEmpty(roles)) {
           throw new ServiceException("没有权限访问角色数据！");
         }
