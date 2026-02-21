@@ -12,10 +12,11 @@ import cc.cmir.common.utils.DateUtils;
 import cc.cmir.common.utils.MessageUtils;
 import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.common.utils.StringUtils;
-import cc.cmir.framework.manager.AsyncManager;
 import cc.cmir.framework.manager.factory.AsyncFactory;
 import cc.cmir.system.service.ISysConfigService;
 import cc.cmir.system.service.ISysUserService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,11 +32,17 @@ public class SysRegisterService {
 
   private final RedisCache redisCache;
 
+  private final SimpleAsyncTaskScheduler simpleAsyncTaskScheduler;
+
   public SysRegisterService(
-      ISysUserService userService, ISysConfigService configService, RedisCache redisCache) {
+      ISysUserService userService,
+      ISysConfigService configService,
+      RedisCache redisCache,
+      @Qualifier("scheduledExecutorService") SimpleAsyncTaskScheduler simpleAsyncTaskScheduler) {
     this.userService = userService;
     this.configService = configService;
     this.redisCache = redisCache;
+    this.simpleAsyncTaskScheduler = simpleAsyncTaskScheduler;
   }
 
   /** 注册 */
@@ -70,10 +77,9 @@ public class SysRegisterService {
       if (!regFlag) {
         msg = "注册失败,请联系系统管理人员";
       } else {
-        AsyncManager.me()
-            .execute(
-                AsyncFactory.recordLogininfor(
-                    username, Constants.REGISTER, MessageUtils.message("user.register.success")));
+        simpleAsyncTaskScheduler.execute(
+            AsyncFactory.recordLogininfor(
+                username, Constants.REGISTER, MessageUtils.message("user.register.success")));
       }
     }
     return msg;

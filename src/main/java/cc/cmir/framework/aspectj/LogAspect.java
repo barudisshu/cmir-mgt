@@ -12,7 +12,6 @@ import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.common.utils.ServletUtils;
 import cc.cmir.common.utils.StringUtils;
 import cc.cmir.common.utils.ip.IpUtils;
-import cc.cmir.framework.manager.AsyncManager;
 import cc.cmir.framework.manager.factory.AsyncFactory;
 import cc.cmir.system.domain.SysOperLog;
 import com.alibaba.fastjson2.JSON;
@@ -28,7 +27,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +54,13 @@ public class LogAspect {
 
   /** 参数最大长度限制 */
   private static final int PARAM_MAX_LENGTH = 2000;
+
+  private final SimpleAsyncTaskScheduler simpleAsyncTaskScheduler;
+
+  public LogAspect(
+      @Qualifier("scheduledExecutorService") SimpleAsyncTaskScheduler simpleAsyncTaskScheduler) {
+    this.simpleAsyncTaskScheduler = simpleAsyncTaskScheduler;
+  }
 
   /** 处理请求前执行 */
   @Before(value = "@annotation(controllerLog)")
@@ -119,7 +127,7 @@ public class LogAspect {
       // 设置消耗时间
       operLog.setCostTime(System.currentTimeMillis() - TIME_THREADLOCAL.get());
       // 保存数据库
-      AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+      simpleAsyncTaskScheduler.execute(AsyncFactory.recordOper(operLog));
     } catch (Exception exp) {
       // 记录本地异常日志
       log.error("异常信息:{}", exp.getMessage());
