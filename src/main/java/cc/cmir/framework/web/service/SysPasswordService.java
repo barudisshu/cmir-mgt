@@ -8,7 +8,6 @@ import cc.cmir.common.exception.user.UserPasswordRetryLimitExceedException;
 import cc.cmir.common.utils.SecurityUtils;
 import cc.cmir.framework.security.context.AuthenticationContextHolder;
 import java.util.concurrent.TimeUnit;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -20,13 +19,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysPasswordService {
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
 
   @Value(value = "${user.password.maxRetryCount}")
   private int maxRetryCount;
 
   @Value(value = "${user.password.lockTime}")
   private int lockTime;
+
+  public SysPasswordService(RedisCache redisCache) {
+    this.redisCache = redisCache;
+  }
 
   /**
    * 登录账户密码错误次数缓存键名

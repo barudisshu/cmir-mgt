@@ -20,15 +20,11 @@ import cc.cmir.framework.manager.factory.AsyncFactory;
 import cc.cmir.framework.security.context.AuthenticationContextHolder;
 import cc.cmir.system.service.ISysConfigService;
 import cc.cmir.system.service.ISysUserService;
-import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 /**
  * 登录校验方法
@@ -37,15 +33,28 @@ import java.util.Collections;
  */
 @Component
 public class SysLoginService {
-  @Autowired private TokenService tokenService;
+  private final TokenService tokenService;
 
-  @Resource private AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
 
-  @Autowired private ISysUserService userService;
+  private final ISysUserService userService;
 
-  @Autowired private ISysConfigService configService;
+  private final ISysConfigService configService;
+
+  public SysLoginService(
+      TokenService tokenService,
+      AuthenticationManager authenticationManager,
+      RedisCache redisCache,
+      ISysUserService userService,
+      ISysConfigService configService) {
+    this.tokenService = tokenService;
+    this.authenticationManager = authenticationManager;
+    this.redisCache = redisCache;
+    this.userService = userService;
+    this.configService = configService;
+  }
 
   /**
    * 登录验证

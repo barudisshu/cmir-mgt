@@ -6,7 +6,6 @@ import cc.cmir.common.core.domain.model.RegisterBody;
 import cc.cmir.common.utils.StringUtils;
 import cc.cmir.framework.web.service.SysRegisterService;
 import cc.cmir.system.service.ISysConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SysRegisterController extends BaseController {
-  @Autowired private SysRegisterService registerService;
+  private final SysRegisterService registerService;
 
-  @Autowired private ISysConfigService configService;
+  private final ISysConfigService configService;
+
+  public SysRegisterController(
+      SysRegisterService registerService, ISysConfigService configService) {
+    this.registerService = registerService;
+    this.configService = configService;
+  }
 
   @PostMapping("/register")
   public AjaxResult register(@RequestBody RegisterBody user) {

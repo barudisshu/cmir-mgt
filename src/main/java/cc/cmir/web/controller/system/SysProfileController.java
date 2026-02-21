@@ -16,7 +16,6 @@ import cc.cmir.common.utils.file.MimeTypeUtils;
 import cc.cmir.framework.web.service.TokenService;
 import cc.cmir.system.service.ISysUserService;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,9 +33,14 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
-  @Autowired private ISysUserService userService;
+  private final ISysUserService userService;
 
-  @Autowired private TokenService tokenService;
+  private final TokenService tokenService;
+
+  public SysProfileController(ISysUserService userService, TokenService tokenService) {
+    this.userService = userService;
+    this.tokenService = tokenService;
+  }
 
   /** 个人信息 */
   @GetMapping

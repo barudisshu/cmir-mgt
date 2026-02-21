@@ -16,7 +16,6 @@ import cc.cmir.framework.manager.AsyncManager;
 import cc.cmir.framework.manager.factory.AsyncFactory;
 import cc.cmir.system.service.ISysConfigService;
 import cc.cmir.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,11 +25,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysRegisterService {
-  @Autowired private ISysUserService userService;
+  private final ISysUserService userService;
 
-  @Autowired private ISysConfigService configService;
+  private final ISysConfigService configService;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
+
+  public SysRegisterService(
+      ISysUserService userService, ISysConfigService configService, RedisCache redisCache) {
+    this.userService = userService;
+    this.configService = configService;
+    this.redisCache = redisCache;
+  }
 
   /** 注册 */
   public String register(RegisterBody registerBody) {

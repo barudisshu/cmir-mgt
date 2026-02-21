@@ -48,7 +48,7 @@ user:
 # Spring配置
 spring:
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss z
+    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
   # 资源信息
   messages:
@@ -61,6 +61,10 @@ spring:
       max-file-size: 10MB
       # 设置总上传的文件大小
       max-request-size: 20MB
+  # 开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
   # 服务模块
   devtools:
     restart:
@@ -68,10 +72,10 @@ spring:
       enabled: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driverClassName: org.postgresql.Driver
     hikari:
-      jdbc-url: jdbc:mysql://${DATABASE_HOST:127.0.0.1}:${DATABASE_PORT:3306}/aicmir-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-      username: ${DATABASE_USERNAME:root}
+      jdbc-url: jdbc:postgresql://${DATABASE_HOST:127.0.0.1}:${DATABASE_PORT:5432}/aicmir-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+      username: ${DATABASE_USERNAME:postgres}
       password: ${DATABASE_PWD:P@ssw0rd}
       # Connection pool settings
       minimum-idle: 5
@@ -81,8 +85,8 @@ spring:
       connection-timeout: 30000
       # Validation settings
       connection-test-query: SELECT 1
-    url: jdbc:mysql://${DATABASE_HOST:127.0.0.1}:${DATABASE_PORT:3306}/aicmir-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    username: ${DATABASE_USERNAME:root}
+    url: jdbc:postgresql://${DATABASE_HOST:127.0.0.1}:${DATABASE_PORT:5432}/aicmir-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PWD:P@ssw0rd}
   # redis 配置
   data:
@@ -94,7 +98,7 @@ spring:
       # 数据库索引
       database: 0
       # 密码
-      password: P@ssw0rd
+      password: ${REDIS_PWD:P@ssw0rd}
       # 连接超时时间
       timeout: 10s
       lettuce:
@@ -128,7 +132,7 @@ mybatis:
 
 # PageHelper分页插件
 pagehelper:
-  helperDialect: mysql
+  helperDialect: postgresql
   supportMethodsArguments: true
   params: count=countSql
 

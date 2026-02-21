@@ -14,7 +14,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +24,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class SysDictTypeServiceImpl implements ISysDictTypeService {
-  @Autowired private SysDictTypeMapper dictTypeMapper;
+  private final SysDictTypeMapper dictTypeMapper;
 
-  @Autowired private SysDictDataMapper dictDataMapper;
+  private final SysDictDataMapper dictDataMapper;
+
+  public SysDictTypeServiceImpl(
+      SysDictTypeMapper dictTypeMapper, SysDictDataMapper dictDataMapper) {
+    this.dictTypeMapper = dictTypeMapper;
+    this.dictDataMapper = dictDataMapper;
+  }
 
   /** 项目启动时，初始化字典到缓存 */
   @PostConstruct

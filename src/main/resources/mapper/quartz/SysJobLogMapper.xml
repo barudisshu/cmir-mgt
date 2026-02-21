@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="exceptionInfo"  column="exception_info"  />
 		<result property="createTime"     column="create_time"     />
 	</resultMap>
-	
+
 	<sql id="selectJobLogVo">
-        select job_log_id, job_name, job_group, invoke_target, job_message, status, exception_info, create_time 
+        select job_log_id, job_name, job_group, invoke_target, job_message, status, exception_info, create_time
 		from sys_job_log
     </sql>
-	
+
 	<select id="selectJobLogList" parameterType="SysJobLog" resultMap="SysJobLogResult">
 		<include refid="selectJobLogVo"/>
 		<where>
@@ -36,39 +36,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND invoke_target like concat('%', #{invokeTarget}, '%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				and date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+				and create_time &gt;= to_timestamp(#{params.beginTime}, 'YYYY-MM-DD"T"HH24:MI:SS')
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				and date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+				and create_time &lt;= to_timestamp(#{params.endTime},'YYYY-MM-DD"T"HH24:MI:SS')
 			</if>
 		</where>
 		order by create_time desc
 	</select>
-	
+
 	<select id="selectJobLogAll" resultMap="SysJobLogResult">
 		<include refid="selectJobLogVo"/>
 	</select>
-	
+
 	<select id="selectJobLogById" parameterType="Long" resultMap="SysJobLogResult">
 		<include refid="selectJobLogVo"/>
 		where job_log_id = #{jobLogId}
 	</select>
-	
+
 	<delete id="deleteJobLogById" parameterType="Long">
  		delete from sys_job_log where job_log_id = #{jobLogId}
  	</delete>
- 	
+
  	<delete id="deleteJobLogByIds" parameterType="Long">
  		delete from sys_job_log where job_log_id in
  		<foreach collection="array" item="jobLogId" open="(" separator="," close=")">
  			#{jobLogId}
-        </foreach> 
+        </foreach>
  	</delete>
- 	
+
  	<update id="cleanJobLog">
         truncate table sys_job_log
     </update>
- 	
+
  	<insert id="insertJobLog" parameterType="SysJobLog">
  		insert into sys_job_log(
  			<if test="jobLogId != null and jobLogId != 0">job_log_id,</if>
@@ -87,8 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="jobMessage != null and jobMessage != ''">#{jobMessage},</if>
  			<if test="status != null and status != ''">#{status},</if>
  			<if test="exceptionInfo != null and exceptionInfo != ''">#{exceptionInfo},</if>
- 			sysdate()
+ 			now()
  		)
 	</insert>
 
-</mapper> 
+</mapper>

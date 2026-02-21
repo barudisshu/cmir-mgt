@@ -9,7 +9,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -23,7 +22,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-  @Autowired private TokenService tokenService;
+  private final TokenService tokenService;
+
+  public JwtAuthenticationTokenFilter(TokenService tokenService) {
+    this.tokenService = tokenService;
+  }
 
   @Override
   protected void doFilterInternal(

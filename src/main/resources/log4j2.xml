@@ -5,7 +5,7 @@
 
 <Configuration status="OFF" monitorInterval="1800">
   <Properties>
-    <Property name="LOG_PATTERN"><![CDATA[$white{%d{yyyy-MM-dd HH:mm:ss.SSS}} %blue{[%32.32t]} %green{%-5level} %style{%c{1.}}{cyan} - %m%n%throwable]]></Property>
+    <Property name="LOG_PATTERN"><![CDATA[$white{%d{yyyy-MM-dd HH:mm:ss}} %blue{[%32.32t]} %green{%-5level} %style{%c{1.}}{cyan} - %m%n%throwable]]></Property>
   </Properties>
   <Appenders>
     <Console name="STDOUT" target="SYSTEM_OUT" follow="true">

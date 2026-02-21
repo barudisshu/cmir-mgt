@@ -8,7 +8,6 @@ import cc.cmir.common.enums.BusinessType;
 import cc.cmir.system.domain.SysNotice;
 import cc.cmir.system.service.ISysNoticeService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
-  @Autowired private ISysNoticeService noticeService;
+  private final ISysNoticeService noticeService;
+
+  public SysNoticeController(ISysNoticeService noticeService) {
+    this.noticeService = noticeService;
+  }
 
   /** 获取通知公告列表 */
   @PreAuthorize("@ss.hasPermi('system:notice:list')")

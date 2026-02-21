@@ -10,7 +10,6 @@ import cc.cmir.system.domain.SysPost;
 import cc.cmir.system.service.ISysPostService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/system/post")
 public class SysPostController extends BaseController {
-  @Autowired private ISysPostService postService;
+  private final ISysPostService postService;
+
+  public SysPostController(ISysPostService postService) {
+    this.postService = postService;
+  }
 
   /** 获取岗位列表 */
   @PreAuthorize("@ss.hasPermi('system:post:list')")
@@ -46,7 +49,7 @@ public class SysPostController extends BaseController {
   @PostMapping("/export")
   public void export(HttpServletResponse response, SysPost post) {
     List<SysPost> list = postService.selectPostList(post);
-    ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
+    ExcelUtil<SysPost> util = new ExcelUtil<>(SysPost.class);
     util.exportExcel(response, list, "岗位数据");
   }
 

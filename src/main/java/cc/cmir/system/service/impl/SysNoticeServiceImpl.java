@@ -4,7 +4,6 @@ import cc.cmir.system.domain.SysNotice;
 import cc.cmir.system.mapper.SysNoticeMapper;
 import cc.cmir.system.service.ISysNoticeService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +13,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {
-  @Autowired private SysNoticeMapper noticeMapper;
+  private final SysNoticeMapper noticeMapper;
+
+  public SysNoticeServiceImpl(SysNoticeMapper noticeMapper) {
+    this.noticeMapper = noticeMapper;
+  }
 
   /**
    * 查询公告信息

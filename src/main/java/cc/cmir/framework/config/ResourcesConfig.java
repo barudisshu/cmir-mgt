@@ -3,7 +3,6 @@ package cc.cmir.framework.config;
 import cc.cmir.common.config.CmirConfig;
 import cc.cmir.common.constant.Constants;
 import cc.cmir.framework.interceptor.RepeatSubmitInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,7 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
-  @Autowired private RepeatSubmitInterceptor repeatSubmitInterceptor;
+  private final RepeatSubmitInterceptor repeatSubmitInterceptor;
+
+  public ResourcesConfig(RepeatSubmitInterceptor repeatSubmitInterceptor) {
+    this.repeatSubmitInterceptor = repeatSubmitInterceptor;
+  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

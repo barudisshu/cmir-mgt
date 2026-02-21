@@ -12,7 +12,6 @@ import cc.cmir.system.service.ISysConfigService;
 import jakarta.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,9 +21,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {
-  @Autowired private SysConfigMapper configMapper;
+  private final SysConfigMapper configMapper;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
+
+  public SysConfigServiceImpl(SysConfigMapper configMapper, RedisCache redisCache) {
+    this.configMapper = configMapper;
+    this.redisCache = redisCache;
+  }
 
   /** 项目启动时，初始化参数到缓存 */
   @PostConstruct

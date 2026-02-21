@@ -23,7 +23,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,11 +38,18 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
   public static final Long MENU_ROOT_ID = 0L;
 
-  @Autowired private SysMenuMapper menuMapper;
+  private final SysMenuMapper menuMapper;
 
-  @Autowired private SysRoleMapper roleMapper;
+  private final SysRoleMapper roleMapper;
 
-  @Autowired private SysRoleMenuMapper roleMenuMapper;
+  private final SysRoleMenuMapper roleMenuMapper;
+
+  public SysMenuServiceImpl(
+      SysMenuMapper menuMapper, SysRoleMapper roleMapper, SysRoleMenuMapper roleMenuMapper) {
+    this.menuMapper = menuMapper;
+    this.roleMapper = roleMapper;
+    this.roleMenuMapper = roleMenuMapper;
+  }
 
   /**
    * 根据用户查询系统菜单列表

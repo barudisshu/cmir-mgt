@@ -2,6 +2,7 @@ package cc.cmir.web.controller.common;
 
 import cc.cmir.common.config.CmirConfig;
 import cc.cmir.common.core.domain.AjaxResult;
+import cc.cmir.common.exception.ServiceException;
 import cc.cmir.common.utils.StringUtils;
 import cc.cmir.common.utils.file.FileUploadUtils;
 import cc.cmir.common.utils.file.FileUtils;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +30,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class CommonController {
   private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
-  @Autowired private ServerConfig serverConfig;
+  private final ServerConfig serverConfig;
 
   private static final String FILE_DELIMITER = ",";
+
+  public CommonController(ServerConfig serverConfig) {
+    this.serverConfig = serverConfig;
+  }
 
   /**
    * 通用下载请求
@@ -45,7 +49,7 @@ public class CommonController {
       String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
     try {
       if (!FileUtils.checkAllowDownload(fileName)) {
-        throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
+        throw new ServiceException(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
       }
       String realFileName =
           System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);

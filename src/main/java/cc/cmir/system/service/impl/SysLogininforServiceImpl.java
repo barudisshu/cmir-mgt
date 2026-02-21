@@ -4,7 +4,6 @@ import cc.cmir.system.domain.SysLogininfor;
 import cc.cmir.system.mapper.SysLogininforMapper;
 import cc.cmir.system.service.ISysLogininforService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLogininforServiceImpl implements ISysLogininforService {
 
-  @Autowired private SysLogininforMapper logininforMapper;
+  private final SysLogininforMapper logininforMapper;
+
+  public SysLogininforServiceImpl(SysLogininforMapper logininforMapper) {
+    this.logininforMapper = logininforMapper;
+  }
 
   /**
    * 新增系统登录日志

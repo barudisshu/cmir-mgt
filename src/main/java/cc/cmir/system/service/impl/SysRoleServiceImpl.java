@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,13 +30,24 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
-  @Autowired private SysRoleMapper roleMapper;
+  private final SysRoleMapper roleMapper;
 
-  @Autowired private SysRoleMenuMapper roleMenuMapper;
+  private final SysRoleMenuMapper roleMenuMapper;
 
-  @Autowired private SysUserRoleMapper userRoleMapper;
+  private final SysUserRoleMapper userRoleMapper;
 
-  @Autowired private SysRoleDeptMapper roleDeptMapper;
+  private final SysRoleDeptMapper roleDeptMapper;
+
+  public SysRoleServiceImpl(
+      SysRoleMapper roleMapper,
+      SysRoleMenuMapper roleMenuMapper,
+      SysUserRoleMapper userRoleMapper,
+      SysRoleDeptMapper roleDeptMapper) {
+    this.roleMapper = roleMapper;
+    this.roleMenuMapper = roleMenuMapper;
+    this.userRoleMapper = userRoleMapper;
+    this.roleDeptMapper = roleDeptMapper;
+  }
 
   /**
    * 根据条件分页查询角色数据

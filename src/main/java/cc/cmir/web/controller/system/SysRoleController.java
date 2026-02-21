@@ -19,7 +19,6 @@ import cc.cmir.system.service.ISysRoleService;
 import cc.cmir.system.service.ISysUserService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,15 +38,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
-  @Autowired private ISysRoleService roleService;
+  private final ISysRoleService roleService;
 
-  @Autowired private TokenService tokenService;
+  private final TokenService tokenService;
 
-  @Autowired private SysPermissionService permissionService;
+  private final SysPermissionService permissionService;
 
-  @Autowired private ISysUserService userService;
+  private final ISysUserService userService;
 
-  @Autowired private ISysDeptService deptService;
+  private final ISysDeptService deptService;
+
+  public SysRoleController(
+      ISysRoleService roleService,
+      TokenService tokenService,
+      SysPermissionService permissionService,
+      ISysUserService userService,
+      ISysDeptService deptService) {
+    this.roleService = roleService;
+    this.tokenService = tokenService;
+    this.permissionService = permissionService;
+    this.userService = userService;
+    this.deptService = deptService;
+  }
 
   @PreAuthorize("@ss.hasPermi('system:role:list')")
   @GetMapping("/list")

@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +30,17 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
   @Value("${token.header}")
   private String header;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
+
+  public SameUrlDataInterceptor(RedisCache redisCache) {
+    this.redisCache = redisCache;
+  }
 
   @SuppressWarnings("unchecked")
   @Override
   public boolean isRepeatSubmit(HttpServletRequest request, RepeatSubmit annotation) {
     String nowParams = "";
-    if (request instanceof RepeatedlyRequestWrapper) {
-      RepeatedlyRequestWrapper repeatedlyRequest = (RepeatedlyRequestWrapper) request;
+    if (request instanceof RepeatedlyRequestWrapper repeatedlyRequest) {
       nowParams = HttpHelper.getBodyString(repeatedlyRequest);
     }
 
@@ -46,7 +48,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     if (StringUtils.isEmpty(nowParams)) {
       nowParams = JSON.toJSONString(request.getParameterMap());
     }
-    Map<String, Object> nowDataMap = new HashMap<String, Object>();
+    Map<String, Object> nowDataMap = new HashMap<>();
     nowDataMap.put(REPEAT_PARAMS, nowParams);
     nowDataMap.put(REPEAT_TIME, System.currentTimeMillis());
 
@@ -70,7 +72,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
         }
       }
     }
-    Map<String, Object> cacheMap = new HashMap<String, Object>();
+    Map<String, Object> cacheMap = new HashMap<>();
     cacheMap.put(url, nowDataMap);
     redisCache.setCacheObject(
         cacheRepeatKey, cacheMap, annotation.interval(), TimeUnit.MILLISECONDS);

@@ -16,7 +16,6 @@ import cc.cmir.quartz.util.ScheduleUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
-  @Autowired private ISysJobService jobService;
+  private final ISysJobService jobService;
+
+  public SysJobController(ISysJobService jobService) {
+    this.jobService = jobService;
+  }
 
   /** 查询定时任务列表 */
   @PreAuthorize("@ss.hasPermi('monitor:job:list')")

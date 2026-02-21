@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +49,11 @@ public class TokenService {
 
   private static final Long MILLIS_MINUTE_TWENTY = 20 * 60 * 1000L;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
+
+  public TokenService(RedisCache redisCache) {
+    this.redisCache = redisCache;
+  }
 
   /**
    * 获取用户身份信息

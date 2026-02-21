@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,9 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/monitor/cache")
 public class CacheController {
-  @Autowired private RedisTemplate<String, String> redisTemplate;
+  private final RedisTemplate<String, String> redisTemplate;
 
-  private static final List<SysCache> caches = new ArrayList<SysCache>();
+  private static final List<SysCache> caches = new ArrayList<>();
 
   {
     caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
@@ -42,6 +41,10 @@ public class CacheController {
     caches.add(new SysCache(CacheConstants.REPEAT_SUBMIT_KEY, "防重提交"));
     caches.add(new SysCache(CacheConstants.RATE_LIMIT_KEY, "限流处理"));
     caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
+  }
+
+  public CacheController(RedisTemplate<String, String> redisTemplate) {
+    this.redisTemplate = redisTemplate;
   }
 
   @SuppressWarnings("deprecation")

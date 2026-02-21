@@ -10,7 +10,6 @@ import cc.cmir.common.utils.StringUtils;
 import cc.cmir.system.service.ISysDeptService;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController {
-  @Autowired private ISysDeptService deptService;
+  private final ISysDeptService deptService;
+
+  public SysDeptController(ISysDeptService deptService) {
+    this.deptService = deptService;
+  }
 
   /** 获取部门列表 */
   @PreAuthorize("@ss.hasPermi('system:dept:list')")
@@ -43,7 +46,7 @@ public class SysDeptController extends BaseController {
   /** 查询部门列表（排除节点） */
   @PreAuthorize("@ss.hasPermi('system:dept:list')")
   @GetMapping("/list/exclude/{deptId}")
-  public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId) {
+  public AjaxResult excludeChild(@PathVariable(required = false) Long deptId) {
     List<SysDept> depts = deptService.selectDeptList(new SysDept());
     depts.removeIf(
         d ->

@@ -73,8 +73,8 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    RuoYiGit: CmirGit,
-    RuoYiDoc: CmirDoc
+    CmirGit: CmirGit,
+    CmirDoc: CmirDoc
   },
   computed: {
     ...mapGetters([

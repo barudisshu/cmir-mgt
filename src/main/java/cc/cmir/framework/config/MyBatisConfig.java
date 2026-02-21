@@ -11,7 +11,6 @@ import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -31,9 +30,13 @@ import org.springframework.util.ClassUtils;
  */
 @Configuration
 public class MyBatisConfig {
-  @Autowired private Environment env;
+  private final Environment env;
 
   static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
+
+  public MyBatisConfig(Environment env) {
+    this.env = env;
+  }
 
   public static String setTypeAliasesPackage(String typeAliasesPackage) {
     ResourcePatternResolver resolver =

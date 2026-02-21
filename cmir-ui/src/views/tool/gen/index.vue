@@ -21,7 +21,7 @@
         <el-date-picker
           v-model="dateRange"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd HH:mm:ss"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
@@ -266,7 +266,7 @@ export default {
           this.$modal.msgSuccess("成功生成到自定义路径：" + row.genPath)
         })
       } else {
-        const zipName = Array.isArray(tableNames) ? "ruoyi.zip" : tableNames + ".zip"
+        const zipName = Array.isArray(tableNames) ? "cmir.zip" : tableNames + ".zip"
         this.$download.zip("/tool/gen/batchGenCode?tables=" + tableNames, zipName)
       }
     },

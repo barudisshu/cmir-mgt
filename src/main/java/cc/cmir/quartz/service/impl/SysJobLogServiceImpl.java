@@ -4,7 +4,6 @@ import cc.cmir.quartz.domain.SysJobLog;
 import cc.cmir.quartz.mapper.SysJobLogMapper;
 import cc.cmir.quartz.service.ISysJobLogService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +13,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysJobLogServiceImpl implements ISysJobLogService {
-  @Autowired private SysJobLogMapper jobLogMapper;
+  private final SysJobLogMapper jobLogMapper;
+
+  public SysJobLogServiceImpl(SysJobLogMapper jobLogMapper) {
+    this.jobLogMapper = jobLogMapper;
+  }
 
   /**
    * 获取quartz调度器日志的计划任务

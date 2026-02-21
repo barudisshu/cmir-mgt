@@ -14,9 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
-
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +32,14 @@ public class CaptchaController {
   @Resource(name = "captchaProducerMath")
   private Producer captchaProducerMath;
 
-  @Autowired private RedisCache redisCache;
+  private final RedisCache redisCache;
 
-  @Autowired private ISysConfigService configService;
+  private final ISysConfigService configService;
+
+  public CaptchaController(RedisCache redisCache, ISysConfigService configService) {
+    this.redisCache = redisCache;
+    this.configService = configService;
+  }
 
   /** 生成验证码 */
   @GetMapping("/captchaImage")

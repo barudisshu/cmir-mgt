@@ -5,7 +5,6 @@ import cc.cmir.common.utils.DictUtils;
 import cc.cmir.system.mapper.SysDictDataMapper;
 import cc.cmir.system.service.ISysDictDataService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +14,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysDictDataServiceImpl implements ISysDictDataService {
-  @Autowired private SysDictDataMapper dictDataMapper;
+  private final SysDictDataMapper dictDataMapper;
+
+  public SysDictDataServiceImpl(SysDictDataMapper dictDataMapper) {
+    this.dictDataMapper = dictDataMapper;
+  }
 
   /**
    * 根据条件分页查询字典数据

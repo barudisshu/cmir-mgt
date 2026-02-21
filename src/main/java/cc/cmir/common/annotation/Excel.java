@@ -23,7 +23,7 @@ public @interface Excel {
   /** 导出到Excel中的名字. */
   public String name() default "";
 
-  /** 日期格式, 如: yyyy-MM-dd */
+  /** 日期格式, 如: YYYY-MM-DD */
   public String dateFormat() default "";
 
   /** 如果是字典类型，请设置字典的type值 (如: sys_user_sex) */

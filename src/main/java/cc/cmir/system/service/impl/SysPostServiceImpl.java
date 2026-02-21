@@ -8,7 +8,6 @@ import cc.cmir.system.mapper.SysPostMapper;
 import cc.cmir.system.mapper.SysUserPostMapper;
 import cc.cmir.system.service.ISysPostService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,9 +17,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysPostServiceImpl implements ISysPostService {
-  @Autowired private SysPostMapper postMapper;
+  private final SysPostMapper postMapper;
 
-  @Autowired private SysUserPostMapper userPostMapper;
+  private final SysUserPostMapper userPostMapper;
+
+  public SysPostServiceImpl(SysPostMapper postMapper, SysUserPostMapper userPostMapper) {
+    this.postMapper = postMapper;
+    this.userPostMapper = userPostMapper;
+  }
 
   /**
    * 查询岗位信息集合

@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: 'RuoYiDoc',
+  name: 'CmirDoc',
   data() {
     return {
-      url: 'http://doc.ruoyi.vip/cmir-vue'
+      url: 'http://doc.cmir.cc/cmir-vue'
     }
   },
   methods: {

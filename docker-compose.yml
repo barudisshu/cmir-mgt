@@ -1,0 +1,34 @@
+services:
+  aicmir-postgres:
+    container_name: aicmir-postgres
+    image: postgres:latest
+    build:
+      context: ./postgresql
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./__data_source/__001_define-system-scheme.sql:/docker-entrypoint-initdb.d/01-define-system-scheme.sql
+      - ./__data_source/__001_define-system-data.sql:/docker-entrypoint-initdb.d/02-define-system-data.sql
+      - ./__data_source/__002_define-quartz-scheme.sql:/docker-entrypoint-initdb.d/05-define-quartz-scheme.sql
+      - ./__data_source/__002_define-quartz-data.sql:/docker-entrypoint-initdb.d/06-define-quartz-data.sql
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "aicmir-cloud" ]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'P@ssw0rd'      # nosonar
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: 'aicmir-cloud'
+      SCHEMA: 'public'
+  aicmir-redis:
+    container_name: aicmir-redis
+    image: redis
+    build:
+      context: ./redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/conf/redis.conf:/home/aicmir/redis/redis.conf
+    command: redis-server /home/aicmir/redis/redis.conf

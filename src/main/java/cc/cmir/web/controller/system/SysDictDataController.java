@@ -13,7 +13,6 @@ import cc.cmir.system.service.ISysDictTypeService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,9 +32,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
-  @Autowired private ISysDictDataService dictDataService;
+  private final ISysDictDataService dictDataService;
 
-  @Autowired private ISysDictTypeService dictTypeService;
+  private final ISysDictTypeService dictTypeService;
+
+  public SysDictDataController(
+      ISysDictDataService dictDataService, ISysDictTypeService dictTypeService) {
+    this.dictDataService = dictDataService;
+    this.dictTypeService = dictTypeService;
+  }
 
   @PreAuthorize("@ss.hasPermi('system:dict:list')")
   @GetMapping("/list")
@@ -50,7 +55,7 @@ public class SysDictDataController extends BaseController {
   @PostMapping("/export")
   public void export(HttpServletResponse response, SysDictData dictData) {
     List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-    ExcelUtil<SysDictData> util = new ExcelUtil<SysDictData>(SysDictData.class);
+    ExcelUtil<SysDictData> util = new ExcelUtil<>(SysDictData.class);
     util.exportExcel(response, list, "字典数据");
   }
 

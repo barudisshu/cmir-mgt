@@ -10,7 +10,6 @@ import cc.cmir.system.domain.SysOperLog;
 import cc.cmir.system.service.ISysOperLogService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/monitor/operlog")
 public class SysOperlogController extends BaseController {
-  @Autowired private ISysOperLogService operLogService;
+  private final ISysOperLogService operLogService;
+
+  public SysOperlogController(ISysOperLogService operLogService) {
+    this.operLogService = operLogService;
+  }
 
   @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
   @GetMapping("/list")
@@ -42,7 +45,7 @@ public class SysOperlogController extends BaseController {
   @PostMapping("/export")
   public void export(HttpServletResponse response, SysOperLog operLog) {
     List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-    ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
+    ExcelUtil<SysOperLog> util = new ExcelUtil<>(SysOperLog.class);
     util.exportExcel(response, list, "操作日志");
   }
 

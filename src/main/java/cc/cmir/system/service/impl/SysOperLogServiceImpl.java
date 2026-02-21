@@ -4,7 +4,6 @@ import cc.cmir.system.domain.SysOperLog;
 import cc.cmir.system.mapper.SysOperLogMapper;
 import cc.cmir.system.service.ISysOperLogService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +13,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {
-  @Autowired private SysOperLogMapper operLogMapper;
+  private final SysOperLogMapper operLogMapper;
+
+  public SysOperLogServiceImpl(SysOperLogMapper operLogMapper) {
+    this.operLogMapper = operLogMapper;
+  }
 
   /**
    * 新增操作日志
