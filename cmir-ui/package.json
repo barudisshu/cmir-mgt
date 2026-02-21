@@ -1,8 +1,8 @@
 {
   "name": "cmir",
   "version": "3.9.1",
-  "description": "爱宝管理系统",
-  "author": "爱宝",
+  "description": "钳子管理系统",
+  "author": "钳子",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

@@ -5,13 +5,13 @@ import cc.cmir.common.constant.CacheConstants;
 import cc.cmir.common.constant.Constants;
 import cc.cmir.common.core.domain.AjaxResult;
 import cc.cmir.common.core.redis.RedisCache;
-import cc.cmir.common.utils.uuid.IdUtils;
 import cc.cmir.system.service.ISysConfigService;
 import com.google.code.kaptcha.Producer;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
@@ -52,7 +52,7 @@ public class CaptchaController {
     }
 
     // 保存验证码信息
-    String uuid = IdUtils.simpleUUID();
+    String uuid = UUID.randomUUID().toString().replace("-", "");
     String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
 
     String capStr = null, code = null;

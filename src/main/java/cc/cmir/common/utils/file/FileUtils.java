@@ -4,7 +4,6 @@ import cc.cmir.common.config.CmirConfig;
 import cc.cmir.common.constant.Constants;
 import cc.cmir.common.utils.DateUtils;
 import cc.cmir.common.utils.StringUtils;
-import cc.cmir.common.utils.uuid.IdUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -16,6 +15,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -80,7 +80,12 @@ public class FileUtils {
     String pathName = "";
     try {
       String extension = getFileExtendName(data);
-      pathName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
+      pathName =
+          DateUtils.datePath()
+              + "/"
+              + UUID.randomUUID().toString().replace("-", "")
+              + "."
+              + extension;
       File file = FileUploadUtils.getAbsoluteFile(uploadDir, pathName);
       fos = new FileOutputStream(file);
       fos.write(data);

@@ -49,7 +49,7 @@ COMMENT ON TABLE "sys_dept" IS '部门表';
 -- ----------------------------
 -- 初始化-部门数据
 -- ----------------------------
-INSERT INTO "sys_dept" VALUES (100, 0,   '0',         '爱宝科技',   0, '猫头虎', '15888888888', 'ry@qq.com', '0', '0', 'admin', now(), 'admin', now());
+INSERT INTO "sys_dept" VALUES (100, 0,   '0',         '钳子科技',   0, '猫头虎', '15888888888', 'ry@qq.com', '0', '0', 'admin', now(), 'admin', now());
 INSERT INTO "sys_dept" VALUES (101, 100, '0,100',     '深圳总公司', 1, '猫头虎', '15888888888', 'ry@qq.com', '0', '0', 'admin', now(), 'admin', now());
 INSERT INTO "sys_dept" VALUES (102, 100, '0,100',     '长沙分公司', 2, '猫头虎', '15888888888', 'ry@qq.com', '0', '0', 'admin', now(), '', now());
 INSERT INTO "sys_dept" VALUES (103, 101, '0,100,101', '研发部门', 1, '猫头虎', '15888888888', 'ry@qq.com', '0', '0', 'admin', now(), 'admin', now());
@@ -932,5 +932,5 @@ COMMENT ON TABLE "sys_notice" IS '通知公告表';
 -- ----------------------------
 -- 初始化-公告信息表数据
 -- ----------------------------
-INSERT INTO "sys_notice" VALUES (2, '维护通知：2026-07-01 爱宝系统凌晨维护', '1', '新版本内容', '0', 'admin', now(), '',     now(), '管理员');
-INSERT INTO "sys_notice" VALUES (1, '温馨提醒：2026-07-01 爱宝新版本发布啦', '2', '维护内容',   '0', 'admin', now(), 'admin',now(), '管理员');
+INSERT INTO "sys_notice" VALUES (2, '维护通知：2026-07-01 钳子系统凌晨维护', '1', '新版本内容', '0', 'admin', now(), '',     now(), '管理员');
+INSERT INTO "sys_notice" VALUES (1, '温馨提醒：2026-07-01 钳子新版本发布啦', '2', '维护内容',   '0', 'admin', now(), 'admin',now(), '管理员');

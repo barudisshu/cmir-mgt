@@ -16,7 +16,7 @@
 
   <name>cmir-mgt</name>
   <url>https://www.cmir.cc</url>
-  <description>爱宝管理系统</description>
+  <description>钳子管理系统</description>
 
   <properties>
     <cmir.version>${revision}${changelist}</cmir.version>

@@ -9,13 +9,13 @@ import cc.cmir.common.utils.StringUtils;
 import cc.cmir.common.utils.http.UserAgentUtils;
 import cc.cmir.common.utils.ip.AddressUtils;
 import cc.cmir.common.utils.ip.IpUtils;
-import cc.cmir.common.utils.uuid.IdUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,8 +69,7 @@ public class TokenService {
         // 解析对应的权限以及用户信息
         String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
         String userKey = getTokenKey(uuid);
-        LoginUser user = redisCache.getCacheObject(userKey);
-        return user;
+        return redisCache.getCacheObject(userKey);
       } catch (Exception e) {
         log.error("获取用户信息异常'{}'", e.getMessage());
       }
@@ -100,7 +99,7 @@ public class TokenService {
    * @return 令牌
    */
   public String createToken(LoginUser loginUser) {
-    String token = IdUtils.fastUUID();
+    String token = UUID.randomUUID().toString().replace("-", "");
     loginUser.setToken(token);
     setUserAgent(loginUser);
     refreshToken(loginUser);

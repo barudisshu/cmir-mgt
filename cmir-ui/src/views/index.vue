@@ -2,7 +2,7 @@
   <div class="app-container home">
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
-        <h2>爱宝后台管理框架</h2>
+        <h2>后台管理框架</h2>
         <p>
           <b>当前版本:</b> <span>v{{ version }}</span>
         </p>
@@ -76,19 +76,6 @@
                 >https://www.cmir.cc</el-link
               >
             </p>
-            <p>
-              <i class="el-icon-chat-dot-round"></i> 微信：<a
-                href="javascript:;"
-                >/ *爱宝</a
-              >
-            </p>
-            <p>
-              <i class="el-icon-money"></i> 支付宝：<a
-                href="javascript:;"
-                class="支付宝信息"
-                >/ *爱宝</a
-              >
-            </p>
           </div>
         </el-card>
       </el-col>
@@ -100,7 +87,7 @@
           <el-collapse accordion>
             <el-collapse-item title="v1.0.0 - 2019-10-08">
               <ol>
-                <li>爱宝前后端分离系统正式发布</li>
+                <li>前后端分离系统正式发布</li>
               </ol>
             </el-collapse-item>
           </el-collapse>
